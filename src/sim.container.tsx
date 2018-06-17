@@ -1,19 +1,36 @@
 import * as React from 'react';
-import { ConfigElevator, ConfigElevatorState } from '../forms/config.types';
-import { ElevatorBtn } from './elevator.btn';
+import { ConfigElevator, ConfigElevatorState } from './config/config.types';
+import { ElevatorBtn } from './components/elevator.btn';
 import { connect, Dispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
-import {RequestBtn} from "./request.btn";
+import { RequestBtn } from './components/request.btn';
+import {simActionCreators} from "./sim.actions";
 
 interface SimContainerProps {
     ConfigElevator?: ConfigElevator;
+    createSimulation?: (config: ConfigElevator) => void;
 }
 
 export class SimContainer extends React.Component<SimContainerProps> {
+    constructor(props) {
+        super(props);
+        this.createSimulation = this.createSimulation.bind(this);
+    }
 
     componentWillMount() {
+        //initial state
+        console.log('initial state');
+        if (this.props.ConfigElevator) {
+            console.log(
+                'Creating New Simulation with: ',
+                this.props.ConfigElevator
+            );
+            this.createSimulation(this.props.ConfigElevator);
+        }
+    }
+
+    createSimulation(config: ConfigElevator) {
         //create elevator instances based on configuration
-        console.log(this.props.ConfigElevator);
     }
 
     render() {
@@ -21,8 +38,8 @@ export class SimContainer extends React.Component<SimContainerProps> {
             <div>
                 <ElevatorBtn active={true} />
                 <ElevatorBtn active={false} />
-                <RequestBtn direction={'up'}/>
-                <RequestBtn direction={'down'}/>
+                <RequestBtn direction={'up'} />
+                <RequestBtn direction={'down'} />
             </div>
         );
     }
@@ -41,6 +58,9 @@ const mapDispatchToProps = (
     props: SimContainerProps
 ) => {
     const redux: SimContainerProps = {
+        createSimulation: (c: ConfigElevator) => {
+            dispatch(simActionCreators.create(c));
+        },
         ...props
     };
     return redux;
