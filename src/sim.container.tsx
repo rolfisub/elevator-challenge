@@ -5,13 +5,13 @@ import { connect, Dispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
 import { RequestBtn } from './components/request.btn';
 import { simActionCreators } from './sim.actions';
-import { SimState } from './sim.types';
+import {Simulation} from './sim.types';
 import {Simulator} from "./components/simulator";
 
 interface SimContainerProps {
     ConfigElevator?: ConfigElevator;
     createSimulation?: (config: ConfigElevator) => void;
-    simulation?: SimState;
+    simulation?: Simulation;
 }
 
 export class SimContainer extends React.Component<SimContainerProps> {
@@ -40,7 +40,7 @@ export class SimContainer extends React.Component<SimContainerProps> {
     }
 
     render() {
-        if (this.props.simulation && this.props.simulation.current) {
+        if (this.props.simulation) {
             const { simulation } = this.props;
             console.log(simulation);
             return (
@@ -49,7 +49,7 @@ export class SimContainer extends React.Component<SimContainerProps> {
                     <ElevatorBtn active={false} />
                     <RequestBtn direction={'up'} />
                     <RequestBtn direction={'down'} />
-                    <Simulator simulation={simulation.current} />
+                    <Simulator simulation={simulation} />
                 </div>
             );
         } else {
