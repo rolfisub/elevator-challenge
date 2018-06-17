@@ -7,7 +7,8 @@
     "member-access": false,
     "no-implicit-dependencies": false,
     "no-console": false,
-    "no-empty-interface": false
+    "no-empty-interface": false,
+    "comment-format": false
   },
   "jsRules": {
     "object-literal-sort-keys": false

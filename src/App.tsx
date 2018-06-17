@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import ConfigForm from './forms/config.form';
 import { Provider } from 'react-redux';
 import createStore from './redux/createStore';
-import {SimContainer} from "./components/sim.container";
+import SimContainer from "./components/sim.container";
 
 const store = createStore();
 
@@ -16,14 +16,7 @@ class App extends React.Component {
                         <ConfigForm />
                     </Grid>
                     <Grid item={true} xs={12} md={12} lg={12}>
-                        <SimContainer
-                            ConfigElevator={{
-                                _id: 0,
-                                elevators: 10,
-                                floors: 100,
-                                elevatorCapacity: 2
-                            }}
-                        />
+                        <SimContainer />
                     </Grid>
                 </Grid>
             </Provider>
