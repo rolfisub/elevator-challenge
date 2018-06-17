@@ -5,7 +5,8 @@ export default (
     state: SimState = {
         current: {
             _id: 0,
-            elevators: []
+            elevators: [],
+            floors:[]
         },
         list: []
     },

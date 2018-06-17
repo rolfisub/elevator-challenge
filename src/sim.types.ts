@@ -16,6 +16,7 @@ export interface Elevator extends Model {
 
 export interface Simulation extends Model {
     elevators: Elevator[];
+    floors: Floor[];
 }
 
 export interface SimState extends StoreState<Simulation> {}

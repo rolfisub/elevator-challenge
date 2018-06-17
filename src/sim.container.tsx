@@ -5,10 +5,13 @@ import { connect, Dispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
 import { RequestBtn } from './components/request.btn';
 import { simActionCreators } from './sim.actions';
+import { SimState } from './sim.types';
+import {Simulator} from "./components/simulator";
 
 interface SimContainerProps {
     ConfigElevator?: ConfigElevator;
     createSimulation?: (config: ConfigElevator) => void;
+    simulation?: SimState;
 }
 
 export class SimContainer extends React.Component<SimContainerProps> {
@@ -17,7 +20,7 @@ export class SimContainer extends React.Component<SimContainerProps> {
         this.createSimulation = this.createSimulation.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         //initial state
         console.log('initial state');
         if (this.props.ConfigElevator) {
@@ -37,20 +40,28 @@ export class SimContainer extends React.Component<SimContainerProps> {
     }
 
     render() {
-        return (
-            <div>
-                <ElevatorBtn active={true} />
-                <ElevatorBtn active={false} />
-                <RequestBtn direction={'up'} />
-                <RequestBtn direction={'down'} />
-            </div>
-        );
+        if (this.props.simulation && this.props.simulation.current) {
+            const { simulation } = this.props;
+            console.log(simulation);
+            return (
+                <div>
+                    <ElevatorBtn active={true} />
+                    <ElevatorBtn active={false} />
+                    <RequestBtn direction={'up'} />
+                    <RequestBtn direction={'down'} />
+                    <Simulator simulation={simulation.current} />
+                </div>
+            );
+        } else {
+            return <div>Loading...</div>;
+        }
     }
 }
 
 const mapStateToProps = (state: any, props: any): SimContainerProps => {
     const redux: SimContainerProps = {
         ConfigElevator: state.reducers.ConfigElevator.current,
+        simulation: state.reducers.Simulation.current,
         ...props
     };
     return redux;
