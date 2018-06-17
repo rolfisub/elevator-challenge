@@ -5,8 +5,8 @@ import { connect, Dispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
 import { RequestBtn } from './components/request.btn';
 import { simActionCreators } from './sim.actions';
-import {Simulation} from './sim.types';
-import {Simulator} from "./components/simulator";
+import { Simulation } from './sim.types';
+import { Simulator } from './components/simulator';
 
 interface SimContainerProps {
     ConfigElevator?: ConfigElevator;
@@ -22,7 +22,6 @@ export class SimContainer extends React.Component<SimContainerProps> {
 
     componentDidMount() {
         //initial state
-        console.log('initial state');
         if (this.props.ConfigElevator) {
             console.log(
                 'Creating New Simulation with: ',
@@ -39,10 +38,29 @@ export class SimContainer extends React.Component<SimContainerProps> {
         }
     }
 
+    componentWillReceiveProps(
+        newProps: SimContainerProps
+    ) {
+        if (
+            this.props.createSimulation &&
+            newProps.ConfigElevator &&
+            this.props.ConfigElevator
+        ) {
+            if (
+                newProps.ConfigElevator.elevators !==
+                    this.props.ConfigElevator.elevators ||
+                newProps.ConfigElevator.floors !==
+                    this.props.ConfigElevator.floors
+            ) {
+
+                this.props.createSimulation(newProps.ConfigElevator);
+            }
+        }
+    }
+
     render() {
         if (this.props.simulation) {
             const { simulation } = this.props;
-            console.log(simulation);
             return (
                 <div>
                     <ElevatorBtn active={true} />

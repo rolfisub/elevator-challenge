@@ -14,7 +14,11 @@ export const simActionCreators = {
     create: (config: ConfigElevator): ThunkAction<void, SimState, void> => {
         return (dispatch: Dispatch<SimState>) => {
             const availableFloors: Floor[] = [];
-            for (let f: number = 0; f < config.floors; f++) {
+            const floors =
+                typeof config.floors === 'string'
+                    ? parseInt(config.floors, 10)
+                    : config.floors;
+            for (let f: number = 0; f < floors; f++) {
                 availableFloors.push({
                     _id: f
                 });
@@ -22,7 +26,11 @@ export const simActionCreators = {
 
             //logic to create initial state of each elevator
             const elevators: Elevator[] = [];
-            for (let e: number = 0; e < config.elevators; e++) {
+            const elevatorCount =
+                typeof config.elevators === 'string'
+                    ? parseInt(config.elevators, 10)
+                    : config.elevators;
+            for (let e: number = 0; e < elevatorCount; e++) {
                 elevators.push({
                     _id: e,
                     direction: 'none',
