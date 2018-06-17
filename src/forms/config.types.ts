@@ -1,4 +1,4 @@
-import {Model, StoreState} from '../common/redux.common';
+import { ActionTypes, Model, StoreState } from '../common/redux.common';
 
 export interface ConfigElevator extends Model {
     floors: number;
@@ -7,3 +7,7 @@ export interface ConfigElevator extends Model {
 }
 
 export interface ConfigElevatorState extends StoreState<ConfigElevator> {}
+
+export const ConfigElevatorActionTypes: ActionTypes = new ActionTypes(
+    'ConfigElevator'
+);
