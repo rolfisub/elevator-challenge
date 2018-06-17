@@ -59,14 +59,16 @@ class ConfigForm extends React.Component<
 }
 
 export const ConfigFormReduxForm = reduxForm({
-    form: 'ConfigForm'
+    form: 'ConfigForm',
+    enableReinitialize: true
 })(ConfigForm);
 
 const mapStateToProps = (
-    state: ConfigElevatorState,
+    state,
     props: ConfigFormProps
 ): ConfigFormProps => {
     const redux: ConfigFormProps = {
+        initialValues: state.reducers.ConfigElevator.current,
         ...props
     };
     return redux;
