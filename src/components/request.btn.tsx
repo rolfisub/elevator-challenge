@@ -7,7 +7,10 @@ interface RequestBtnProps {
 }
 
 export const RequestBtn = (props: RequestBtnProps) => (
-    <Button variant={'fab'}>
+    <Button variant={'fab'} style={{
+        fontSize:10,
+        margin:5
+    }}>
         {props.direction === 'up' ? <ArrowUpward /> : <ArrowDownward />}
     </Button>
 );
