@@ -6,7 +6,11 @@
     "interface-name": false,
     "member-access": false,
     "no-implicit-dependencies": false,
-    "no-console": false
+    "no-console": false,
+    "no-empty-interface": false
+  },
+  "jsRules": {
+    "object-literal-sort-keys": false
   },
   "linterOptions": {
     "exclude": [

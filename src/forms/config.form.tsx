@@ -8,7 +8,7 @@ import { ThunkAction } from 'redux-thunk';
 import { connect } from 'react-redux';
 
 interface ConfigFormProps {
-    handleSubmit: () => void;
+
 }
 
 class ConfigForm extends React.Component<
