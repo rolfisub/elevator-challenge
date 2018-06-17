@@ -4,7 +4,7 @@ import { ElevatorBtn } from './components/elevator.btn';
 import { connect, Dispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
 import { RequestBtn } from './components/request.btn';
-import {simActionCreators} from "./sim.actions";
+import { simActionCreators } from './sim.actions';
 
 interface SimContainerProps {
     ConfigElevator?: ConfigElevator;
@@ -31,6 +31,9 @@ export class SimContainer extends React.Component<SimContainerProps> {
 
     createSimulation(config: ConfigElevator) {
         //create elevator instances based on configuration
+        if (this.props.createSimulation) {
+            this.props.createSimulation(config);
+        }
     }
 
     render() {
