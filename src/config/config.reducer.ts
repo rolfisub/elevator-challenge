@@ -1,5 +1,9 @@
-import {ConfigElevator, ConfigElevatorActionTypes, ConfigElevatorState} from "./config.types";
-import {Action} from "../common/redux.common";
+import {
+    ConfigElevator,
+    ConfigElevatorActionTypes,
+    ConfigElevatorState
+} from './config.types';
+import { Action } from '../common/redux.common';
 
 export default (
     state: ConfigElevatorState = {
@@ -15,9 +19,9 @@ export default (
 ) => {
     switch (action.type) {
         case ConfigElevatorActionTypes.create: {
-            if(action.payload && state.current) {
+            if (action.payload && state.current) {
                 const newState: ConfigElevatorState = {
-                    current: {...action.payload.data},
+                    current: { ...action.payload.data },
                     list: [...state.list]
                 };
                 return newState;
@@ -27,5 +31,5 @@ export default (
         default:
             return state;
     }
-    return state
-}
+    return state;
+};
