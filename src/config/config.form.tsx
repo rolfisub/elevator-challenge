@@ -6,9 +6,11 @@ import { Button } from '@material-ui/core';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { connect } from 'react-redux';
+import { configFormActionCreators } from './config.actions';
 
 interface ConfigFormProps {
-
+    generate?: (c: ConfigElevator) => void;
+    initialValues?: ConfigElevator;
 }
 
 class ConfigForm extends React.Component<
@@ -20,8 +22,9 @@ class ConfigForm extends React.Component<
     }
 
     handleSubmit(config: ConfigElevator) {
-        console.log(config);
-        return;
+        if (this.props.generate) {
+            this.props.generate(config);
+        }
     }
 
     render() {
@@ -59,15 +62,14 @@ class ConfigForm extends React.Component<
 }
 
 export const ConfigFormReduxForm = reduxForm({
-    form: 'ConfigForm'
+    form: 'ConfigForm',
+    enableReinitialize: true
 })(ConfigForm);
 
-const mapStateToProps = (
-    state: ConfigElevatorState,
-    props: ConfigFormProps
-): ConfigFormProps => {
+const mapStateToProps = (state, props: ConfigFormProps): ConfigFormProps => {
     const redux: ConfigFormProps = {
-        ...props
+        ...props,
+        initialValues: state.reducers.ConfigElevator.current
     };
     return redux;
 };
@@ -77,7 +79,10 @@ const mapDispatchToProps = (
     props: ConfigFormProps
 ) => {
     const redux: ConfigFormProps = {
-        ...props
+        ...props,
+        generate: (c: ConfigElevator) => {
+            dispatch(configFormActionCreators.create(c));
+        }
     };
     return redux;
 };

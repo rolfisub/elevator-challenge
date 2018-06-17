@@ -13,6 +13,7 @@ export const renderTextField = ({
             {...input}
             {...custom}
             style={{ margin: 10 }}
+            type={'number'}
         />
         {touched && (error && <label style={{ color: 'red' }}>{error}</label>)}
     </div>
