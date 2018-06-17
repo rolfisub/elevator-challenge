@@ -1,7 +1,11 @@
-import {ConfigElevator, ConfigElevatorActionTypes, ConfigElevatorState} from './config.types';
+import {
+    ConfigElevator,
+    ConfigElevatorActionTypes,
+    ConfigElevatorState
+} from './config.types';
 import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
-import {Action, Payload} from '../common/redux.common';
+import { Action, Payload } from '../common/redux.common';
 
 export const configFormActionCreators = {
     create(

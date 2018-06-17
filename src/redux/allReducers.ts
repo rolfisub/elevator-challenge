@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import ConfigElevator from '../forms/config.reducer';
+import ConfigElevator from '../config/config.reducer';
+import Simulation from '../sim.reducer';
 
 const allReducers = combineReducers({
-    ConfigElevator
+    ConfigElevator,
+    Simulation
 });
 
 export default allReducers;
