@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { ConfigElevator, ConfigElevatorState } from './config/config.types';
-import { ElevatorBtn } from './components/elevator.btn';
 import { connect, Dispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
-import { RequestBtn } from './components/request.btn';
 import { simActionCreators } from './sim.actions';
 import { Simulation } from './sim.types';
 import { Simulator } from './components/simulator';
@@ -63,10 +61,6 @@ export class SimContainer extends React.Component<SimContainerProps> {
             const { simulation } = this.props;
             return (
                 <div>
-                    <ElevatorBtn active={true} />
-                    <ElevatorBtn active={false} />
-                    <RequestBtn direction={'up'} />
-                    <RequestBtn direction={'down'} />
                     <Simulator simulation={simulation} />
                 </div>
             );
