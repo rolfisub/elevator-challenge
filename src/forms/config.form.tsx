@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { renderTextField } from '../common/render.fields';
-import {Field, InjectedFormProps, default as reduxForm} from 'redux-form';
-import { ConfigElevator } from './config.types';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { ConfigElevator, ConfigElevatorState } from './config.types';
 import { Button } from '@material-ui/core';
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { connect } from 'react-redux';
 
 interface ConfigFormProps {
     handleSubmit: () => void;
@@ -17,6 +20,7 @@ class ConfigForm extends React.Component<
     }
 
     handleSubmit(config: ConfigElevator) {
+        console.log(config);
         return;
     }
 
@@ -54,28 +58,33 @@ class ConfigForm extends React.Component<
     }
 }
 
-export const ConfigFormReduxForm = reduxForm( {
+export const ConfigFormReduxForm = reduxForm({
     form: 'ConfigForm'
 })(ConfigForm);
 
-const mapStateToProps = (state: , props:ConfigFormProps): ConfigFormProps => {
-    const redux: BlueprintCreateProps = {
-        submitErrors: getFormSubmitErrors('BlueprintCreateForm')(state),
+const mapStateToProps = (
+    state: ConfigElevatorState,
+    props: ConfigFormProps
+): ConfigFormProps => {
+    const redux: ConfigFormProps = {
         ...props
     };
-
     return redux;
 };
 
 const mapDispatchToProps = (
-    dispatch: Dispatch<ThunkAction<void, BlueprintStoreState, void> | any>,
-    props: BlueprintCreateProps
+    dispatch: Dispatch<ThunkAction<void, ConfigElevatorState, void> | any>,
+    props: ConfigFormProps
 ) => {
-    const redux: BlueprintCreateProps = {
-        createBlueprint: (s: Blueprint) => {
-            dispatch(blueprintActionCreators.create(s));
-        },
+    const redux: ConfigFormProps = {
         ...props
     };
     return redux;
 };
+
+const ConfigFormConnected = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ConfigFormReduxForm);
+
+export default ConfigFormConnected;
