@@ -13,13 +13,13 @@ import { Action, Payload } from './common/redux.common';
 export const simActionCreators = {
     create: (config: ConfigElevator): ThunkAction<void, SimState, void> => {
         return (dispatch: Dispatch<SimState>) => {
-            const availableFloors: Floor[] = [];
+            const allFloors: Floor[] = [];
             const floors =
                 typeof config.floors === 'string'
                     ? parseInt(config.floors, 10)
                     : config.floors;
             for (let f: number = 0; f < floors; f++) {
-                availableFloors.push({
+                allFloors.push({
                     _id: f
                 });
             }
@@ -35,7 +35,6 @@ export const simActionCreators = {
                     _id: e,
                     direction: 'none',
                     currentFloor: 0,
-                    availableFloors: [...availableFloors],
                     requests: [],
                     trips: 0,
                     maintenance: false
@@ -46,7 +45,7 @@ export const simActionCreators = {
                 data: {
                     _id: 0,
                     elevators: [...elevators],
-                    floors: [...availableFloors]
+                    floors: [...allFloors]
                 },
                 list: []
             };

@@ -11,7 +11,6 @@ export interface Floor extends Model {}
 export interface Elevator extends Model {
     currentFloor: number;
     direction: 'up' | 'down' | 'none';
-    availableFloors: Floor[];
     requests: Request[];
     trips: number;
     maintenance: boolean;
