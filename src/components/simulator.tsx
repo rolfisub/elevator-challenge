@@ -53,8 +53,8 @@ export const Simulator = (props: SimulatorProps) => {
                                                 );
                                             })}
                                             <TableCell>
-                                                <RequestBtn direction={'up'} />
-                                                <RequestBtn direction={'down'} />
+                                                <RequestBtn direction={'up'} currentFloor={f}/>
+                                                <RequestBtn direction={'down'} currentFloor={f}/>
                                             </TableCell>
                                         </TableRow>
                                     )

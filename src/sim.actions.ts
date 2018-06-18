@@ -36,7 +36,9 @@ export const simActionCreators = {
                     direction: 'none',
                     currentFloor: 0,
                     availableFloors: [...availableFloors],
-                    requests: []
+                    requests: [],
+                    trips: 0,
+                    maintenance: false
                 });
             }
 
