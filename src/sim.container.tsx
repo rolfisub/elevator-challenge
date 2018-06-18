@@ -36,9 +36,7 @@ export class SimContainer extends React.Component<SimContainerProps> {
         }
     }
 
-    componentWillReceiveProps(
-        newProps: SimContainerProps
-    ) {
+    componentWillReceiveProps(newProps: SimContainerProps) {
         if (
             this.props.createSimulation &&
             newProps.ConfigElevator &&
@@ -50,18 +48,20 @@ export class SimContainer extends React.Component<SimContainerProps> {
                 newProps.ConfigElevator.floors !==
                     this.props.ConfigElevator.floors
             ) {
-
                 this.props.createSimulation(newProps.ConfigElevator);
             }
         }
     }
 
     render() {
-        if (this.props.simulation) {
+        if (this.props.simulation && this.props.ConfigElevator) {
             const { simulation } = this.props;
             return (
                 <div>
-                    <Simulator simulation={simulation} />
+                    <Simulator
+                        simulation={simulation}
+                        config={this.props.ConfigElevator}
+                    />
                 </div>
             );
         } else {
