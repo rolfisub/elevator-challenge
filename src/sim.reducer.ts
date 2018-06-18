@@ -6,7 +6,7 @@ export default (
         current: {
             _id: 0,
             elevators: [],
-            floors:[]
+            floors: []
         },
         list: []
     },

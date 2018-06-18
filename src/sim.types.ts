@@ -3,7 +3,7 @@ import { ActionTypes, Model, StoreState } from './common/redux.common';
 export interface Request {
     from: number;
     to: number;
-    direction: "up" | "down";
+    direction: 'up' | 'down';
 }
 
 export interface Floor extends Model {}
