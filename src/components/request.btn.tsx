@@ -90,6 +90,7 @@ export class RequestBtn extends React.Component<
         this.setState({
             openDialog: false
         });
+        // TODO: here we pass the request to the controller
         console.log(value);
     }
 
