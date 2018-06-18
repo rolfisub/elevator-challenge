@@ -16,6 +16,7 @@ export class RequestDialog extends React.Component<RequestDialogProps> {
     constructor(props) {
         super(props);
         this.handleClose = this.handleClose.bind(this);
+        this.handleFloorClick = this.handleFloorClick.bind(this);
     }
 
     handleClose(data: Request) {
@@ -23,10 +24,7 @@ export class RequestDialog extends React.Component<RequestDialogProps> {
     }
 
     handleFloorClick(data: Request) {
-        console.log(data);
-        if(this.props.onClose) {
-            this.props.onClose(data);
-        }
+        this.props.onClose(data);
     }
     render() {
         return (
