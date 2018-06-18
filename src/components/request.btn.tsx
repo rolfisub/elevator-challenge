@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import { RequestDialog } from './request.dialog';
 import { Floor, Request } from '../sim.types';
 import { ConfigElevator } from '../config/config.types';
+import SimController from '../sim.controller';
 
 interface RequestBtnProps {
     direction: 'up' | 'down';
@@ -86,12 +87,12 @@ export class RequestBtn extends React.Component<
         });
     }
 
-    handleClose(value) {
+    handleClose(request: Request) {
         this.setState({
             openDialog: false
         });
         // TODO: here we pass the request to the controller
-        console.log(value);
+        SimController.handleRequest(request);
     }
 
     render() {
