@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import { Floor, Request } from '../sim.types';
+import { FloorBtn } from './floor.btn';
 
 interface RequestDialogProps {
     open: boolean;
+    direction: 'up' | 'down';
     currentFloor: Floor;
     availableFloors: Floor[];
     onClose: (r: Request) => void;
@@ -21,7 +23,10 @@ export class RequestDialog extends React.Component<RequestDialogProps> {
     }
 
     handleFloorClick(data: Request) {
-        this.props.onClose(data);
+        console.log(data);
+        if(this.props.onClose) {
+            this.props.onClose(data);
+        }
     }
     render() {
         return (
@@ -31,11 +36,20 @@ export class RequestDialog extends React.Component<RequestDialogProps> {
             >
                 <DialogTitle>Please select floor</DialogTitle>
                 <DialogContent>
-                    {
-                        this.props.availableFloors.map((f:Floor, index)=>{
-                            return <div key={index}>{(f._id)}</div>;
-                        })
-                    }
+                    {this.props.availableFloors.map((f: Floor, index) => {
+                        const request: Request = {
+                            from: this.props.currentFloor._id,
+                            to: f._id,
+                            direction: this.props.direction
+                        };
+                        return (
+                            <FloorBtn
+                                key={index}
+                                request={request}
+                                onClick={this.handleFloorClick}
+                            />
+                        );
+                    })}
                 </DialogContent>
             </Dialog>
         );

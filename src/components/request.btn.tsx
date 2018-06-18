@@ -107,6 +107,7 @@ export class RequestBtn extends React.Component<
                     availableFloors={this.state.availableFloors}
                     onClose={this.handleClose}
                     selectedValue={this.state.selectedValue}
+                    direction={this.props.direction}
                 />
                 <Button
                     variant={'fab'}
