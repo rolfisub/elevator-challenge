@@ -9,7 +9,7 @@ export default (
     state: ConfigElevatorState = {
         current: {
             _id: 0,
-            elevators: 2,
+            elevators: 3,
             floors: 5,
             elevatorCapacity: 1
         },
