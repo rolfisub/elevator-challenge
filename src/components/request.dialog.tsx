@@ -11,25 +11,31 @@ interface RequestDialogProps {
 }
 
 export class RequestDialog extends React.Component<RequestDialogProps> {
-
     constructor(props) {
         super(props);
         this.handleClose = this.handleClose.bind(this);
     }
 
-    handleClose(data) {
-        this.props.onClose(data.target.value);
+    handleClose(data: Request) {
+        this.props.onClose(data);
     }
 
-    handleFloorClick(data) {
-        this.props.onClose(data.target.value);
+    handleFloorClick(data: Request) {
+        this.props.onClose(data);
     }
     render() {
         return (
-            <Dialog onClose={this.handleClose} open={this.props.open}>
+            <Dialog
+                onClose={() => this.handleClose(this.props.selectedValue)}
+                open={this.props.open}
+            >
                 <DialogTitle>Please select floor</DialogTitle>
                 <DialogContent>
-                    test
+                    {
+                        this.props.availableFloors.map((f:Floor, index)=>{
+                            return <div key={index}>{(f._id)}</div>;
+                        })
+                    }
                 </DialogContent>
             </Dialog>
         );

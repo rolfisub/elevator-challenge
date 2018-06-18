@@ -9,7 +9,8 @@
     "no-console": false,
     "no-empty-interface": false,
     "comment-format": false,
-    "jsx-boolean-value": false
+    "jsx-boolean-value": false,
+    "jsx-no-lambda": false
   },
   "jsRules": {
     "object-literal-sort-keys": false
