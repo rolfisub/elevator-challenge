@@ -2,10 +2,8 @@ import * as React from 'react';
 import { Grid } from '@material-ui/core';
 import ConfigForm from './config/config.form';
 import { Provider } from 'react-redux';
-import createStore from './redux/createStore';
+import { store } from './redux/createStore';
 import SimContainer from './sim.container';
-
-export const store = createStore();
 
 class App extends React.Component {
     public render() {

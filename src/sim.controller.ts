@@ -2,7 +2,7 @@
  * this class will try to route requests to elevators based on the logic defined
  */
 import { Elevator, Request, SimState } from './sim.types';
-import { store } from './App';
+import { store } from './redux/createStore';
 import { Store } from 'redux';
 import { ConfigElevatorState } from './config/config.types';
 
@@ -16,7 +16,6 @@ interface SimulationState {
 class SimController {
     protected state: SimulationState;
     constructor(protected simStore: Store<SimulationState>) {
-        this.state = this.simStore.getState();
         this.updateState = this.updateState.bind(this);
         this.getAvailableElevators = this.getAvailableElevators.bind(this);
     }
@@ -77,15 +76,17 @@ class SimController {
             });
         }
 
-        elevatorsProximity.sort((a: ElevatorProximity, b: ElevatorProximity) => {
-            if(a.proximity < b.proximity) {
-                return -1;
+        elevatorsProximity.sort(
+            (a: ElevatorProximity, b: ElevatorProximity) => {
+                if (a.proximity < b.proximity) {
+                    return -1;
+                }
+                if (a.proximity > b.proximity) {
+                    return 1;
+                }
+                return 0;
             }
-            if(a.proximity > b.proximity) {
-                return 1;
-            }
-            return 0;
-        });
+        );
 
         //we return the closest elevator to the request
         return elevatorsProximity[0];
