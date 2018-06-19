@@ -5,6 +5,8 @@ import { Elevator, Request, SimState } from './sim.types';
 import { store } from './redux/createStore';
 import { Store } from 'redux';
 import { ConfigElevatorState } from './config/config.types';
+import { simActionCreators } from './sim.actions';
+import {Model} from "./common/redux.common";
 
 interface SimulationState {
     reducers: {
@@ -13,11 +15,16 @@ interface SimulationState {
     };
 }
 
+export interface AssignRequest extends Model {
+    request: Request
+}
+
 class SimController {
     protected state: SimulationState;
     constructor(protected simStore: Store<SimulationState>) {
         this.updateState = this.updateState.bind(this);
         this.getAvailableElevators = this.getAvailableElevators.bind(this);
+        this.assignRequestToElevator = this.assignRequestToElevator.bind(this);
     }
 
     updateState() {
@@ -28,24 +35,36 @@ class SimController {
         //get current state
         this.updateState();
 
+        //log request
+        console.log('request received: ', request);
+
         //get all available elevators
         const availableElevators: Elevator[] = this.getAvailableElevators(
             request
         );
 
         if (availableElevators.length > 0) {
-            //we have available elevators
+            //we have available elevators, get the closest one
             const closestElevator: Elevator = this.getClosestElevator(
                 availableElevators,
                 request
             );
+            console.log('closest elevator: ', closestElevator);
 
-            console.log(closestElevator);
+            //now we need to assign the request to that elevator :-)
+            this.assignRequestToElevator(request, closestElevator);
         } else {
-            //add to a queue of requests?
+            //add to a queue of pending requests?
         }
-        //Logic to determine which elevator should address the request
-        console.log(request);
+    }
+
+    assignRequestToElevator(request: Request, elevator: Elevator) {
+        console.log("assigning to elevator " + elevator._id);
+        const assignRequest: AssignRequest =  {
+            _id: elevator._id,
+            request: {...request}
+        };
+        this.simStore.dispatch(simActionCreators.addRequestToElevator(assignRequest));
     }
 
     /**
