@@ -9,6 +9,7 @@ import {
 } from './sim.types';
 import { Dispatch } from 'redux';
 import { Action, Payload } from './common/redux.common';
+import { AssignRequest } from './sim.controller';
 
 export const simActionCreators = {
     create: (config: ConfigElevator): ThunkAction<void, SimState, void> => {
@@ -52,6 +53,28 @@ export const simActionCreators = {
 
             const action: Action<Simulation> = {
                 type: SimActionTypes.create,
+                payload
+            };
+
+            dispatch(action);
+        };
+    },
+    addRequestToElevator(request: AssignRequest) {
+        return (dispatch: Dispatch<SimState>, getState) => {
+            const state = getState();
+            const payload: Payload<Simulation> = {
+                data: {
+                    ...state.reducers.Simulation.current
+                },
+                list: []
+            };
+
+            payload.data.elevators[request._id].requests.push({
+                ...request.request
+            });
+
+            const action: Action<Simulation> = {
+                type: SimActionTypes.assignRequest,
                 payload
             };
 

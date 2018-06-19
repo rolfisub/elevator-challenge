@@ -23,4 +23,12 @@ export interface Simulation extends Model {
 
 export interface SimState extends StoreState<Simulation> {}
 
-export const SimActionTypes: ActionTypes = new ActionTypes('Sim');
+class ActionTypesSim extends ActionTypes {
+    public assignRequest: string;
+    constructor(public module: string) {
+        super(module);
+        this.assignRequest = this.module + ".assignRequest";
+    }
+}
+
+export const SimActionTypes: ActionTypesSim = new ActionTypesSim('Sim');

@@ -23,6 +23,19 @@ export default (
             }
             break;
         }
+        case SimActionTypes.assignRequest: {
+            if (action.payload && state.current) {
+                if (action.payload && state.current) {
+                    const newState: SimState = {
+                        current: { ...action.payload.data },
+                        list: [...state.list]
+                    };
+                    return newState;
+                }
+                break;
+            }
+            break;
+        }
         default:
             return state;
     }
