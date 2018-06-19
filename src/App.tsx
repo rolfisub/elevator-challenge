@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import createStore from './redux/createStore';
 import SimContainer from './sim.container';
 
-const store = createStore();
+export const store = createStore();
 
 class App extends React.Component {
     public render() {

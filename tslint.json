@@ -10,7 +10,8 @@
     "no-empty-interface": false,
     "comment-format": false,
     "jsx-boolean-value": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "prefer-for-of": false
   },
   "jsRules": {
     "object-literal-sort-keys": false
