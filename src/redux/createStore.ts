@@ -9,7 +9,7 @@ declare global {
     }
 }
 
-export default () => {
+const createMyStore = () => {
     const composeEnhancers =
         typeof window === 'object' &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -26,3 +26,5 @@ export default () => {
         enhancer
     );
 };
+
+export const store = createMyStore();
