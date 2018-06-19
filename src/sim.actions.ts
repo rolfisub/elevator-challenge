@@ -73,6 +73,10 @@ export const simActionCreators = {
                 ...request.request
             });
 
+            if(payload.data.elevators[request._id].direction === "none") {
+                payload.data.elevators[request._id].direction = request.request.direction;
+            }
+
             const action: Action<Simulation> = {
                 type: SimActionTypes.assignRequest,
                 payload

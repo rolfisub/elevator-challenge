@@ -13,26 +13,13 @@ export default (
     action: Action<Simulation>
 ) => {
     switch (action.type) {
-        case SimActionTypes.create: {
+        case SimActionTypes.create || SimActionTypes.assignRequest: {
             if (action.payload && state.current) {
                 const newState: SimState = {
                     current: { ...action.payload.data },
                     list: [...state.list]
                 };
                 return newState;
-            }
-            break;
-        }
-        case SimActionTypes.assignRequest: {
-            if (action.payload && state.current) {
-                if (action.payload && state.current) {
-                    const newState: SimState = {
-                        current: { ...action.payload.data },
-                        list: [...state.list]
-                    };
-                    return newState;
-                }
-                break;
             }
             break;
         }
