@@ -1,20 +1,11 @@
 /**
  * this class will try to route requests to elevators based on the logic defined
  */
-import { Elevator, Request, SimState } from './sim.types';
+import { Elevator, Request, SimulationState } from './sim.types';
 import { store } from './redux/createStore';
 import { Store } from 'redux';
-import { ConfigElevatorState } from './config/config.types';
 import { simActionCreators } from './sim.actions';
 import { Model } from './common/redux.common';
-import { mainEventLoop } from './sim.eventloop';
-
-interface SimulationState {
-    reducers: {
-        ConfigElevator: ConfigElevatorState;
-        Simulation: SimState;
-    };
-}
 
 export interface AssignRequest extends Model {
     request: Request;
@@ -26,15 +17,6 @@ class SimController {
         this.updateState = this.updateState.bind(this);
         this.getAvailableElevators = this.getAvailableElevators.bind(this);
         this.assignRequestToElevator = this.assignRequestToElevator.bind(this);
-        this.testFunc = this.testFunc.bind(this);
-    }
-
-    testFunc() {
-        console.log('tick');
-        console.log(this.state);
-    }
-    testFunc2() {
-        console.log('tock');
     }
 
     updateState() {
@@ -63,17 +45,6 @@ class SimController {
 
             //now we need to assign the request to that elevator :-)
             this.assignRequestToElevator(request, closestElevator);
-
-            mainEventLoop.addFunction({
-                _id: 7,
-                function: this.testFunc
-            });
-            mainEventLoop.addFunction({
-                _id: 6,
-                function: this.testFunc2
-            });
-
-            mainEventLoop.startEventLoop();
         } else {
             //add to a queue of pending requests?
         }
