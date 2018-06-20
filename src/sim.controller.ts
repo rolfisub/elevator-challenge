@@ -69,7 +69,7 @@ class SimController {
                 function: this.testFunc
             });
             mainEventLoop.addFunction({
-                _id: 8,
+                _id: 6,
                 function: this.testFunc2
             });
 
