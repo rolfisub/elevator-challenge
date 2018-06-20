@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk';
 import {
     Elevator,
     Floor,
+    Request,
     SimActionTypes,
     SimState,
     Simulation
@@ -73,9 +74,38 @@ export const simActionCreators = {
                 ...request.request
             });
 
+            //if elevator has no direaction set it
             if (payload.data.elevators[request._id].direction === 'none') {
                 payload.data.elevators[request._id].direction =
                     request.request.direction;
+            }
+
+            //sort requests based on current direction
+            const { direction } = payload.data.elevators[request._id];
+            if (direction === 'down') {
+                payload.data.elevators[request._id].requests.sort(
+                    (a: Request, b: Request) => {
+                        if (a.from > b.from) {
+                            return -1;
+                        }
+                        if (a.from < b.from) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                );
+            } else {
+                payload.data.elevators[request._id].requests.sort(
+                    (a: Request, b: Request) => {
+                        if (a.from > b.from) {
+                            return 1;
+                        }
+                        if (a.from < b.from) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+                );
             }
 
             const action: Action<Simulation> = {
