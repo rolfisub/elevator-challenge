@@ -6,7 +6,8 @@ import { store } from './redux/createStore';
 import { Store } from 'redux';
 import { ConfigElevatorState } from './config/config.types';
 import { simActionCreators } from './sim.actions';
-import {Model} from "./common/redux.common";
+import { Model } from './common/redux.common';
+import { mainEventLoop } from './sim.eventloop';
 
 interface SimulationState {
     reducers: {
@@ -16,7 +17,7 @@ interface SimulationState {
 }
 
 export interface AssignRequest extends Model {
-    request: Request
+    request: Request;
 }
 
 class SimController {
@@ -25,6 +26,15 @@ class SimController {
         this.updateState = this.updateState.bind(this);
         this.getAvailableElevators = this.getAvailableElevators.bind(this);
         this.assignRequestToElevator = this.assignRequestToElevator.bind(this);
+        this.testFunc = this.testFunc.bind(this);
+    }
+
+    testFunc() {
+        console.log('tick');
+        console.log(this.state);
+    }
+    testFunc2() {
+        console.log('tock');
     }
 
     updateState() {
@@ -53,18 +63,31 @@ class SimController {
 
             //now we need to assign the request to that elevator :-)
             this.assignRequestToElevator(request, closestElevator);
+
+            mainEventLoop.addFunction({
+                _id: 7,
+                function: this.testFunc
+            });
+            mainEventLoop.addFunction({
+                _id: 8,
+                function: this.testFunc2
+            });
+
+            mainEventLoop.startEventLoop();
         } else {
             //add to a queue of pending requests?
         }
     }
 
     assignRequestToElevator(request: Request, elevator: Elevator) {
-        console.log("assigning to elevator " + elevator._id);
-        const assignRequest: AssignRequest =  {
+        console.log('assigning to elevator ' + elevator._id);
+        const assignRequest: AssignRequest = {
             _id: elevator._id,
-            request: {...request}
+            request: { ...request }
         };
-        this.simStore.dispatch(simActionCreators.addRequestToElevator(assignRequest));
+        this.simStore.dispatch(
+            simActionCreators.addRequestToElevator(assignRequest)
+        );
     }
 
     /**
