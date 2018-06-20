@@ -16,6 +16,16 @@ export class SimEventloop {
 
     addFunction(func: EventLoopFunction) {
         this.functions.push(func);
+        //sort by id (this is the priority)
+        this.functions.sort((a:EventLoopFunction, b:EventLoopFunction)=>{
+            if(a._id < b._id) {
+                return -1;
+            }
+            if(a._id > b._id) {
+                return 1;
+            }
+            return 0;
+        })
     }
 
     startEventLoop() {
