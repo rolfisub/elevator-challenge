@@ -35,6 +35,7 @@ export class ElevatorBehaviour {
                     store.dispatch(simActionCreators.elevatorMove("down", e));
                 } else {
                     //same floor
+                    store.dispatch(simActionCreators.elevatorMove("same", e));
                 }
             }
         });
