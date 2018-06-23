@@ -137,7 +137,7 @@ export const simActionCreators = {
             dispatch(action);
         };
     },
-    elevatorMove(direction: 'up' | 'down', elevator: Elevator) {
+    elevatorMove(direction: 'up' | 'down' | "same", elevator: Elevator) {
         return (dispatch: Dispatch<SimState>, getState) => {
             const state = getState();
             const payload: Payload<Simulation> = {
@@ -149,7 +149,7 @@ export const simActionCreators = {
 
             if (direction === 'up') {
                 payload.data.elevators[elevator._id].currentFloor++;
-            } else {
+            } else if (direction === "down") {
                 payload.data.elevators[elevator._id].currentFloor--;
             }
 
