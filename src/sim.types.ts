@@ -13,6 +13,7 @@ export interface Elevator extends Model {
     currentFloor: number;
     direction: 'up' | 'down' | 'none';
     requests: Request[];
+    moves: number[];
     trips: number;
     maintenance: boolean;
 }

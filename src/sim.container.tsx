@@ -5,6 +5,8 @@ import { ThunkAction } from 'redux-thunk';
 import { simActionCreators } from './sim.actions';
 import { Simulation } from './sim.types';
 import { Simulator } from './components/simulator';
+import { mainEventLoop } from './sim.eventloop';
+import { elevatorBehaviour } from './elevator.behaviour';
 
 interface SimContainerProps {
     ConfigElevator?: ConfigElevator;
@@ -33,6 +35,12 @@ export class SimContainer extends React.Component<SimContainerProps> {
         //create elevator instances based on configuration
         if (this.props.createSimulation) {
             this.props.createSimulation(config);
+            //add to main event loop
+            mainEventLoop.addFunction({
+                _id: 5,
+                function: elevatorBehaviour.elevatorMovement
+            });
+            mainEventLoop.startEventLoop();
         }
     }
 
