@@ -21,7 +21,6 @@ export class ElevatorBehaviour {
      * according to their requests
      */
     elevatorMovement() {
-        console.log('elevator movement');
         this.updateState();
         const { elevators } = this.state.reducers.Simulation.current;
         elevators.forEach((e: Elevator, index) => {
