@@ -29,6 +29,7 @@ export class SimEventloop {
     }
 
     startEventLoop() {
+        console.log("starting main event loop");
         this.intervalInstance = setInterval(() => {
             for (
                 let index: number = 0;

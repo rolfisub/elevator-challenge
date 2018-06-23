@@ -38,6 +38,7 @@ export const simActionCreators = {
                     direction: 'none',
                     currentFloor: 0,
                     requests: [],
+                    moves: [],
                     trips: 0,
                     maintenance: false
                 });
@@ -74,7 +75,7 @@ export const simActionCreators = {
                 ...request.request
             });
 
-            //if elevator has no direaction set it
+            //if elevator has no direction set it
             if (payload.data.elevators[request._id].direction === 'none') {
                 payload.data.elevators[request._id].direction =
                     request.request.direction;
@@ -108,8 +109,63 @@ export const simActionCreators = {
                 );
             }
 
+            //add to moves array
+            payload.data.elevators[request._id].moves.push(
+                request.request.from
+            );
+            payload.data.elevators[request._id].moves.push(request.request.to);
+
+            if (direction === 'down') {
+                payload.data.elevators[request._id].moves.sort();
+                payload.data.elevators[request._id].moves.reverse();
+            } else {
+                payload.data.elevators[request._id].moves.sort();
+            }
+
+            //remove duplicates
+            payload.data.elevators[request._id].moves.filter(
+                (a, index, array) => {
+                    return array.indexOf(a) < 0;
+                }
+            );
+
             const action: Action<Simulation> = {
                 type: SimActionTypes.assignRequest,
+                payload
+            };
+
+            dispatch(action);
+        };
+    },
+    elevatorMove(direction: 'up' | 'down', elevator: Elevator) {
+        return (dispatch: Dispatch<SimState>, getState) => {
+            const state = getState();
+            const payload: Payload<Simulation> = {
+                data: {
+                    ...state.reducers.Simulation.current
+                },
+                list: []
+            };
+
+            if (direction === 'up') {
+                payload.data.elevators[elevator._id].currentFloor++;
+            } else {
+                payload.data.elevators[elevator._id].currentFloor--;
+            }
+
+            if (
+                payload.data.elevators[elevator._id].currentFloor ===
+                payload.data.elevators[elevator._id].moves[0]
+            ) {
+                payload.data.elevators[elevator._id].moves.shift();
+            }
+
+            if (payload.data.elevators[elevator._id].moves.length === 0) {
+                payload.data.elevators[elevator._id].direction = 'none';
+            }
+
+            const action: Action<Simulation> = {
+                type: SimActionTypes.create,
                 payload
             };
 

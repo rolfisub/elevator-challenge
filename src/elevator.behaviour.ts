@@ -2,8 +2,9 @@
  * elevator behaviour
  */
 import { store } from './redux/createStore';
-import { SimulationState } from './sim.types';
+import { Elevator, SimulationState } from './sim.types';
 import { Store } from 'redux';
+import {simActionCreators} from "./sim.actions";
 
 export class ElevatorBehaviour {
     protected state: SimulationState;
@@ -20,7 +21,23 @@ export class ElevatorBehaviour {
      * according to their requests
      */
     elevatorMovement() {
+        console.log('elevator movement');
         this.updateState();
+        const { elevators } = this.state.reducers.Simulation.current;
+        elevators.forEach((e: Elevator, index) => {
+            if (e.moves.length > 0) {
+                //we have moves to do
+                if (e.currentFloor < e.moves[0]) {
+                    //dispatch move up
+                    store.dispatch(simActionCreators.elevatorMove("up", e));
+                } else if (e.currentFloor > e.moves[0]) {
+                    //dispatch move down
+                    store.dispatch(simActionCreators.elevatorMove("down", e));
+                } else {
+                    //same floor
+                }
+            }
+        });
     }
 }
 
